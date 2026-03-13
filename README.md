@@ -8,10 +8,10 @@
 
 ## Usage
 
-1. Open **BITKIN** in your browser
+1. Open **[BITKIN](https://bitkin.fun/game/)** in your browser
 2. Open DevTools → **Console** (`F12` or `Cmd+Option+J`)
 3. Paste the full contents of `bitkin-bot.js` and hit **Enter**
-4. Run `startGame()` — bot activates automatically
+4. Run `startGame()` — bot activates automatically or start the game manually
 
 ```
 ✅ Hook ready — now run startGame()
