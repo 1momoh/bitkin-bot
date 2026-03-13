@@ -1,47 +1,10 @@
 # 🤖 bitkin-bot
 
-> A browser console auto-player for the [BITKIN](https://bitkin.io) endless runner game.
+> A browser console auto-player for the [BITKIN](https://bitkin.fun/game/) endless runner game.
 > Built by [**.87 🌵**](https://x.com/ofalamin) · [@ofalamin](https://x.com/ofalamin)
 
 ---
 
-## How it works
-
-Instead of pixel scanning the canvas (which fails due to background buildings matching obstacle brightness), **bitkin-bot hooks directly into the game's `collides()` function** — which is exposed on `window` and called every frame with the exact player and obstacle positions.
-
-```
-window.collides(player, obs) is called every game tick
-         │
-         ▼
-bot intercepts both arguments
-         │
-         ▼
-collect all obstacles in tick → pick closest within reactionDist
-         │
-         ├─ has .d sprite (STOOL/CARDS/BOTTLE) → JUMP
-         ├─ gate part (h≤10 or w≤25)           → JUMP
-         ├─ type === 'gate'                     → JUMP
-         └─ no .d, not gate-shaped (CHIP)       → DUCK
-         │
-         ▼
-fire keydown/keyup → cooldown guard → next tick
-```
-
-No pixel scanning. No canvas reads. No false positives.
-
----
-
-## Version history
-
-| Version | Approach | Problem |
-|---|---|---|
-| v1 | Canvas pixel brightness threshold | Background buildings triggered false jumps |
-| v2 | Frame diffing against baseline | Buildings still close enough in brightness |
-| v3 | Read `window.P`, `window.obs`, `window.spd` | Variables are in a closure, not on window |
-| v4 | `collides()` hook, frame detection via `player.x` | Player x is always 88 — world scrolls, not player |
-| **v5** | `collides()` hook, tick buffer, correct classifier | ✅ Working |
-
----
 
 ## Usage
 
@@ -89,11 +52,6 @@ BitkinBot.config({
 | `type === 'gate'` | Full gate object | **JUMP** |
 | None of above | CHIP (flying obstacle) | **DUCK** |
 
----
-
-## Why not a browser extension?
-
-A Chrome extension would use the same `window.collides` hook — no advantage in detection accuracy. Console script is simpler, faster to iterate, and requires zero installation.
 
 ---
 
